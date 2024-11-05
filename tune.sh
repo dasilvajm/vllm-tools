@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Usage:  tune_create.sh $1 $2 $3
+# Usage:  tune.sh $1 $2 $3
 # $1 = model
 # $2 = BS
 # $3 = input/output length
