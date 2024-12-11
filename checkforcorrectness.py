@@ -32,7 +32,7 @@ def checkReasonability():
         enable_prefix_caching=False,
         # max_num_batched_tokens=4,
         # max_num_seqs=4,
-        # max_model_len=2048,
+        max_model_len=8192,
         gpu_memory_utilization=0.9,
         quantization_param_path="",
 #       distributed_executor_backend="mp",
