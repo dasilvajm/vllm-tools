@@ -7,7 +7,7 @@ import numpy as np
 from scipy import stats
 from transformers import AutoTokenizer
 
-model = '/dockerx/Meta-Llama-3.1-8B'
+model = '/dockerx/Llama-3.1-8B-Instruct'
 
 number_of_generated_seq = 1
 enforce_eager = False
