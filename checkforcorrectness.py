@@ -56,7 +56,7 @@ def checkReasonability():
         n=number_of_generated_seq,
         temperature=0.0,
         top_p=1.0,
-        use_beam_search=False,
+    #    use_beam_search=False,
         ignore_eos=True,
         max_tokens=256)
 
