@@ -50,7 +50,7 @@ def checkReasonability():
     #             "What do you like?",
     #             "How to cook chicken?",
     #             "what is quantum entanglement?"]
-    inputs = ["How to cook chicken?",]
+    inputs = ["Count from 1 to 300 in increments of one",]
 
     sampling_params = SamplingParams(
         n=number_of_generated_seq,
