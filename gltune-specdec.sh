@@ -1,9 +1,10 @@
 #!/bin/bash
 
-# Usage:  tune_create.sh $1 $2 $3
+# Usage:  gltune_specdec.sh $1 $2 $3 $4
 # $1 = model
 # $2 = BS
-# $3 = input/output length
+# $3 = input length
+# $4 = output length
 
 
 modelfolder=/dockerx/$1
