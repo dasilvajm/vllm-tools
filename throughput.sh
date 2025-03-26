@@ -47,7 +47,7 @@ run_benchmark() {
     fi
 
     # Extract the number before "requests/s" from "Throughput: 6.40 requests/s, ..."
-    throughput=$(echo "$output" | grep "Throughput:" | sed 's/Throughput: \([0-9]\+\.[0-9]\+\) requests\/s.*/\1/' || echo "N/A")
+    throughput=$(echo "$output" | grep "Throughput:" | sed 's/.* \([0-9]\+\.[0-9]\+\) output tokens\/s/\1/' || echo "N/A")
     echo "$throughput"
 }
 
