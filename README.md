@@ -10,6 +10,7 @@ vLLM is a framework designed to streamline the deployment, testing, and benchmar
 - Sufficient disk storage in your instance to accommodate the docker images and LLMs under test.
 - Ubuntu 22.04 LTS image
 
+
 ## Install ROCm
 The example below outlines the steps for installing the latest available public AMD ROCm release, in this case, ROCm 6.3.2.
 
@@ -59,6 +60,7 @@ sudo apt-get update
 sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y
 ```
 
+
 ## Pull and run the recommended AMD V710 VLLM Docker image
 
 A V710 vLLM docker image has been made available on AMD’s rocm/vllm-dev dockerhub repository.  
@@ -68,6 +70,7 @@ Pull the image:
 ```
 sudo docker pull rocm/vllm-dev:v710inference_rocm6.3-release_ubuntu22.04_py3.10_pytorch_release-2.6
 ```
+
 
 Run the Docker image:
 
@@ -91,10 +94,12 @@ Key Metrics:  Total latency (in seconds) for processing the batch.
 Use Case: Ideal for testing the impact of model configurations (e.g., batch size, sequence length) or hardware capabilities on inference speed.
 
 
-Example Command (assumes that the model is present in the $HOME/dockerx folder)
+
+## Example Command 
+The command below runs the Llama-3.1-8B-Instruct model with batch size 1, input length 1024 and output length 1024 and expects that the model is present in the $HOME/dockerx folder:
 
 ```
 python benchmark_latency.py --input-len=1024 --output-len=1024 --batch-size=1 --num-iters=5 --model='/dockerx/Llama-3.1-8B-Instruct/' --num-iters-warmup 2 --dtype=float16 --max_model_len=4096
 ```
 
-This test runs the Llama-3.1-8B-Instruct model with batch size 1, input length 1024 and output length 1024
+
