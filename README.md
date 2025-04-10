@@ -85,14 +85,7 @@ Note that this example mounts the $HOME/dockerx folder to the container.  In the
 
 vLLM includes three key benchmarking scripts to evaluate different aspects of inference performance: benchmark_latency.py, benchmark_throughput.py, and benchmark_serving.py.   This document will focus on the latency benchmark.
 
-The benchmark_latency.py script is designed to measure the latency of processing a single batch of requests in an offline inference scenario. This test focuses on the time taken to complete inference for a fixed batch of prompts, making it ideal for understanding the raw speed of vLLM's inference engine under controlled conditions.
-
-Purpose: Evaluates the end-to-end latency for a single batch of requests, from input processing to output generation, excluding network or serving overhead.
-
-Key Metrics:  Total latency (in seconds) for processing the batch.
-
-Use Case: Ideal for testing the impact of model configurations (e.g., batch size, sequence length) or hardware capabilities on inference speed.
-
+The benchmark_latency.py script is designed to measure the latency of processing a single batch of requests in an offline inference scenario. This test evaluates the end-to-end latency for a single batch of requests, from input processing to output generation, excluding network or serving overhead and will provide the total latency (in seconds) for processing the batch.
 
 
 ## Example Command 
