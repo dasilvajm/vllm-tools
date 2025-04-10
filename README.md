@@ -1,42 +1,36 @@
-# MAD, Model Automation and Dashboarding
+# vLLM Setup for Benchmarking Large Language Models on an NVads V710 v5-series Instance
 
-## What is this repository for? 
+## Introduction 
 
-MAD (Model Automation and Dashboarding), is a combination of AI/ML model zoo, automation for running the models on various GPU architectures, a mechanism of maintaining historical performance data, and generating dashboards for tracking. 
+vLLM is a framework designed to streamline the deployment, testing, and benchmarking of large language models (LLMs) in a virtualized environment.  This setup is particularly valuable for benchmarking, as it provides a consistent and reproducible platform to measure key inference performance metrics.
 
-## DISCLAIMER
 
-The information presented in this document is for informational purposes only and may contain technical inaccuracies, omissions, and typographical errors. The information contained herein is subject to change and may be rendered inaccurate for many reasons, including but not limited to product and roadmap changes, component and motherboard versionchanges, new model and/or product releases, product differences between differing manufacturers, software changes, BIOS flashes, firmware upgrades, or the like. Any computer system has risks of security vulnerabilities that cannot be completely prevented or mitigated.AMD assumes no obligation to update or otherwise correct or revise this information. However, AMD reserves the right to revise this information and to make changes from time to time to the content hereof without obligation of AMD to notify any person of such revisions or changes.THIS INFORMATION IS PROVIDED ‘AS IS.” AMD MAKES NO REPRESENTATIONS OR WARRANTIES WITH RESPECT TO THE CONTENTS HEREOF AND ASSUMES NO RESPONSIBILITY FOR ANY INACCURACIES, ERRORS, OR OMISSIONS THAT MAY APPEAR IN THIS INFORMATION. AMD SPECIFICALLY DISCLAIMS ANY IMPLIED WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, OR FITNESS FOR ANY PARTICULAR PURPOSE. IN NO EVENT WILL AMD BE LIABLE TO ANY PERSON FOR ANY RELIANCE, DIRECT, INDIRECT, SPECIAL, OR OTHER CONSEQUENTIAL DAMAGES ARISING FROM THE USE OF ANY INFORMATION CONTAINED HEREIN, EVEN IF AMD IS EXPRESSLY ADVISED OF THE POSSIBILITY OF SUCH DAMAGES. AMD, the AMD Arrow logo, and combinations thereof are trademarks of Advanced Micro Devices, Inc. Other product names used in this publication are for identification purposes only and may be trademarks of their respective companies.
+## Prerequisites
 
-© 2025 Advanced Micro Devices, Inc. All Rights Reserved.
 
-## How to run model
+o	Access to an NVads V710 v5 instance, preferably NV24ads (full GPU instance) for a fast interactive experience.
+o	Sufficient disk storage in your instance to accommodate the docker images and LLMs under test.
 
-Install requirements: 
+•	Software:
+o	Ubuntu 22.04.4 LTS image 
+
+•	Accounts and Access:
+o	A Hugging Face account with a read-only API token (for downloading models).
+o	Alternatively, models copied locally to the instance under test
+
+
+## Install ROCm
+The example below outlines the steps for installing the latest available public AMD ROCm release, in this case, ROCm 6.3.2.
+
 ```
-pip3 install -r requirements.txt
-```
-
-With tools/run_models.py script, all models in models.json can be run locally on a docker host, to collect performance results.
-
-```
-usage: tools/run_models.py [-h] [--tags TAGS] [--timeout TIMEOUT] [--live-output] [--clean-docker-cache] [--keep-alive] [--keep-model-dir] [-o OUTPUT] [--log-level LOG_LEVEL]
-
-Run the application of MAD, Model Automation and Dashboarding v1.0.0.
-
-options:
-  -h, --help            show this help message and exit
-  --tags TAGS
-                        Tags to run model (can be multiple).
-  --timeout TIMEOUT     Timeout for the application running model in seconds, default timeout of 7200 (2 hours).
-  --live-output         Prints output in real-time directly on STDOUT.
-  --clean-docker-cache  Rebuild docker image without using cache.
-  --keep-alive          Keep the container alive after the application finishes running.
-  --keep-model-dir      Keep the model directory after the application finishes running.
-  -o OUTPUT, --output OUTPUT
-                        Output file for the result.
-  --log-level LOG_LEVEL
-                        Log level for the logger.
+sudo apt update
+sudo apt install "linux-headers-$(uname -r)" "linux-modules-extra-$(uname -r)"
+sudo apt install python3-setuptools python3-wheel
+sudo usermod -a -G render,video $LOGNAME 
+wget https://repo.radeon.com/amdgpu-install/6.3.2/ubuntu/jammy/amdgpu-install_6.3.60302-1_all.deb
+sudo apt install ./amdgpu-install_6.3.60302-1_all.deb -y
+sudo apt update
+sudo apt install amdgpu-dkms rocm -y
 ```
 
 run_models.py is the main MAD CLI(Command Line Interface) for running models locally. While the tool has many options, running a singular model is very easy. To run any model simply look for its name or tag in the models.json and the command is of the form:
