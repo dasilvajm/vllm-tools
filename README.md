@@ -10,7 +10,7 @@ vLLM is a framework designed to streamline the deployment, testing, and benchmar
 - Sufficient disk storage in your instance to accommodate the docker images and LLMs under test.
 - Ubuntu 22.04 LTS image
 
-
+<br><br>
 
 ## Install ROCm
 The example below outlines the steps for installing the latest available public AMD ROCm release, in this case, ROCm 6.3.2.
@@ -41,7 +41,7 @@ Reboot the instance before continuing.  After the reboot, load the amdgpu driver
 sudo modprobe amdgpu
 ```
 
-
+<br><br>
  
 ## Install Docker
 Use the steps below to install Docker:
@@ -62,7 +62,7 @@ sudo apt-get update
 sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y
 ```
 
-
+<br><br>
 
 ## Pull and run the recommended AMD V710 VLLM Docker image
 
@@ -74,7 +74,7 @@ Pull the image:
 sudo docker pull rocm/vllm-dev:v710inference_rocm6.3-release_ubuntu22.04_py3.10_pytorch_release-2.6
 ```
 
-
+<br><br>
 
 Run the Docker image:
 
@@ -84,7 +84,7 @@ sudo docker run -it --network=host --device=/dev/kfd --device=/dev/dri --ipc=hos
 
 Note that this example mounts the $HOME/dockerx folder to the container.  In the benchmarking examples below, the language models are assumed to be already downloaded to the /dockerx folder.
 
-
+<br><br>
  
 ## Benchmarking Inference Performance with vLLM
 
@@ -93,7 +93,8 @@ vLLM includes three key benchmarking scripts to evaluate different aspects of in
 The benchmark_latency.py script is designed to measure the latency of processing a single batch of requests in an offline inference scenario. This test evaluates the end-to-end latency for a single batch of requests, from input processing to output generation, excluding network or serving overhead and will provide the total latency (in seconds) for processing the batch.
 
 
-#
+<br><br>
+
 ## Example Command 
 The command below runs the Llama-3.1-8B-Instruct model with batch size 1, input length 1024 and output length 1024 and expects that the model is present in the $HOME/dockerx folder:
 
