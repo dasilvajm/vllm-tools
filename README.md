@@ -6,18 +6,9 @@ vLLM is a framework designed to streamline the deployment, testing, and benchmar
 
 
 ## Prerequisites
-
-
-o	Access to an NVads V710 v5 instance, preferably NV24ads (full GPU instance) for a fast interactive experience.
-o	Sufficient disk storage in your instance to accommodate the docker images and LLMs under test.
-
-•	Software:
-o	Ubuntu 22.04.4 LTS image 
-
-•	Accounts and Access:
-o	A Hugging Face account with a read-only API token (for downloading models).
-o	Alternatively, models copied locally to the instance under test
-
+- Access to an NVads V710 v5 instance, preferably NV24ads (full GPU instance) for a fast interactive experience.
+- Sufficient disk storage in your instance to accommodate the docker images and LLMs under test.
+- Ubuntu 22.04 LTS image
 
 ## Install ROCm
 The example below outlines the steps for installing the latest available public AMD ROCm release, in this case, ROCm 6.3.2.
@@ -33,160 +24,76 @@ sudo apt update
 sudo apt install amdgpu-dkms rocm -y
 ```
 
-run_models.py is the main MAD CLI(Command Line Interface) for running models locally. While the tool has many options, running a singular model is very easy. To run any model simply look for its name or tag in the models.json and the command is of the form:
+When done, verify that amdgpu dkms is properly installed.  
 
-For each model in models.json, the script
+```
+dkms status
+```
 
-* builds docker images associated with each model. The images are named 'ci-$(model_name)', and are not removed after the script completes.
-* starts the docker container, with name, 'container_$(model_name)'. The container should automatically be stopped and removed whenever the script exits.
-* clones the git 'url', and runs the 'script'
-* compiles the final perf.csv and perf.html
+If successful, it should report back as “installed” as shown below:
+amdgpu/6.10.5-2109964.22.04, 6.8.0-1021-azure, x86_64: installed
 
-### Tag functionality
+Reboot the instance before continuing.  After the reboot, load the amdgpu driver:
 
-With the tag functionality, the user can select a subset of the models, that have the corresponding tags matching user specified tags, to be run. User specified tags can be specified in 'tags.json' or with the --tags argument. If multiple tags are specified, all models that match any tag is selected. Each model name in models.json is automatically a tag that can be used to run that model. Tags are also supported in comma-separated form
+```
+sudo modprobe amdgpu
+```
 
-"python3 tools/run_models.py --tags TAG" so for example to run the pyt_huggingface_bert model use "python3 tools/run_models.py --tags pyt_huggingface_bert" or to run all pytorch models "python3 tools/run_models.py --tags pyt".
+ 
+## Install Docker
+Use the steps below to install Docker:
 
-### Custom timeouts
+```
+sudo apt-get install ca-certificates curl -y
+sudo install -m 0755 -d /etc/apt/keyrings
+sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+sudo chmod a+r /etc/apt/keyrings/docker.asc
 
-The default timeout for model run is 2 hrs. This can be overridden if the model in models.json contains a 'timeout' : TIMEOUT entry. Both the default timeout and/or timeout specified in models.json can be overridden using --timeout TIMEOUT command line argument. Having TIMEOUT set to 0 means that the model run will never timeout.
+# Add the repository to Apt 
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
+  $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
+  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 
-### Debugging
+sudo apt-get update
+sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y
+```
 
-Some of the more useful flags to be aware of are "--liveOutput" and "–keepAlive". "--liveOutput" will show all the logs as MAD is running, otherwise they are saved to log files on the current directory. "–keepAlive" will prevent MAD from stopping and removing the container when it is done, which can be very useful for manual debugging or experimentation. Note that when running with the "–keepAlive" flag the user is responsible for stopping and deleting that container. The same MAD model cannot run again until that container is cleared. 
+## Pull and run the recommended AMD V710 VLLM Docker image
 
-For a more details on the tool please look at the "–help" flag 
+A V710 vLLM docker image has been made available on AMD’s rocm/vllm-dev dockerhub repository.  
 
-## To add a model to the MAD repo
+Pull the image:
 
-0. create workload name. The names of the modules should follow a specfic format. First it should be the framework(tf_, tf2_, pyt_, ort_, ...) , the name of the project and finally the workload. For example
+```
+sudo docker pull rocm/vllm-dev:v710inference_rocm6.3-release_ubuntu22.04_py3.10_pytorch_release-2.6
+```
 
-    ```
-    tf2_huggingface_gpt2
-    ```
-    Use this name in the models.json, as the dockerfile name and the scripts folder name.
+Run the Docker image:
 
-1. add the necessary info to the models.json file. Here is a sample model info entry for bert
-    ```json
-        {
-            "name": "tf2_bert_large",
-            "url": "https://github.com/ROCmSoftwarePlatform/bert",
-            "dockerfile": "docker/tf2_bert_large",
-            "scripts": "scripts/tf2_bert_large",
-            "n_gpus": "4",
-            "owner": "john.doe@amd.com",
-            "training_precision": "fp32",
-            "tags": [
-                "per_commit",
-                "tf2",
-                "bert",
-                "fp32"
-            ],
-            "args": ""
-        }
-    ```
-   | Field               | Description                                                                |
-   |---------------------| ---------------------------------------------------------------------------|
-   | name                | a unique model name                                                        |
-   | url                 | model url to clone                                                         |
-   | dockerfile          | initial search path dockerfile collection                                  |
-   | scripts             | model script to execute in dockerfile under cloned model directory         |
-   | data                | Optional field denoting data for script                                    |
-   | n_gpus              | number of gpus exposed inside docker container. '-1' => all available gpus |
-   | timeout             | model specific timeout, default of 2 hrs                                   |
-   | owner               | email address for model owner                                              |
-   | training\_precision | precision, currently used only for reporting                               |
-   | tags                | list of tags for selecting model. The model name is a default tag.         |
-   | multiple\_results   | optional parameter for multiple results, pointing to csv that holds results|
-   | args                | extra arguments passed to model scripts                                    | 
+```
+sudo docker run -it --network=host --device=/dev/kfd --device=/dev/dri --ipc=host --shm-size 16G --group-add video --cap-add=SYS_PTRACE --security-opt seccomp=unconfined -v $HOME/dockerx:/dockerx rocm/vllm-dev:v710inference_rocm6.3-release_ubuntu22.04_py3.10_pytorch_release-2.6
+```
 
-2. create a dockerfile, or reuse an existing dockerfile in the docker directory. Here is an example below that should serve as a template. 
-    ```docker
-    # CONTEXT {'gpu_vendor': 'AMD', 'guest_os': 'UBUNTU'}
-    FROM rocm/tensorflow
+Note that this example mounts the $HOME/dockerx folder to the container.  In the benchmarking examples below, the language models are assumed to be already downloaded to the /dockerx folder.
 
-    # Install dependencies
-    RUN apt update && apt install -y \
-        unzip 
-    RUN pip3 install pandas
+ 
+## Benchmarking Inference Performance with vLLM
 
-    # Download data
-    RUN URL=https://storage.googleapis.com/bert_models/2018_10_18/uncased_L-24_H-1024_A-16.zip && \
-        wget --directory-prefix=/data -c $URL && \
-        ZIP_NAME=$(basename $URL) && \
-        unzip /data/$ZIP_NAME -d /data
-    ```
-3. create a directory in the scripts directory that contains everything necessary to do a run and report performance. The contents of this directory will be copied to the model root directory. Make sure the directory has a run script. If the script name is not explicitly specified, MAD assumes that the script name is 'run.sh'. Here is a sample run.sh script for bert.
-    ```bash
-        # setup model
-        MODEL_CONFIG_DIR=/data/uncased_L-24_H-1024_A-16
-        BATCH=2
-        SEQ=512
-        TRAIN_DIR=bert_large_ba${BATCH}_seq${SEQ}
-        TRAIN_STEPS=100
-        TRAIN_WARM_STEPS=10
-        LEARNING_RATE=1e-4
-        DATA_SOURCE_FILE_PATH=sample_text.txt
-        DATA_TFRECORD=sample_text_seq${SEQ}.tfrecord
-        MASKED_LM_PROB=0.15
-        calc_max_pred() {
-            echo $(python3 -c "import math; print(math.ceil($SEQ*$MASKED_LM_PROB))")
-        }
-        MAX_PREDICTION_PER_SEQ=$(calc_max_pred)
+vLLM includes three key benchmarking scripts to evaluate different aspects of inference performance: benchmark_latency.py, benchmark_throughput.py, and benchmark_serving.py.   This document will focus on the latency benchmark.
 
-        python3 create_pretraining_data.py \
-            --input_file=$DATA_SOURCE_FILE_PATH \
-            --output_file=$DATA_TFRECORD \
-            --vocab_file=$MODEL_CONFIG_DIR/vocab.txt \
-            --do_lower_case=True \
-            --max_seq_length=$SEQ \
-            --max_predictions_per_seq=$MAX_PREDICTION_PER_SEQ \
-            --masked_lm_prob=$MASKED_LM_PROB \
-            --random_seed=12345 \
-            --dupe_factor=5
+The benchmark_latency.py script is designed to measure the latency of processing a single batch of requests in an offline inference scenario. This test focuses on the time taken to complete inference for a fixed batch of prompts, making it ideal for understanding the raw speed of vLLM's inference engine under controlled conditions.
 
-        # train model
-        python3 run_pretraining.py \
-            --input_file=$DATA_TFRECORD \
-            --output_dir=$TRAIN_DIR \
-            --do_train=True \
-            --do_eval=True \
-            --bert_config_file=$MODEL_CONFIG_DIR/bert_config.json \
-            --train_batch_size=$BATCH \
-            --max_seq_length=$SEQ \
-            --max_predictions_per_seq=$MAX_PREDICTION_PER_SEQ \
-            --num_train_steps=$TRAIN_STEPS \
-            --num_warmup_steps=$TRAIN_WARM_STEPS \
-            --learning_rate=$LEARNING_RATE \
-            2>&1 | tee log.txt
+Purpose: Evaluates the end-to-end latency for a single batch of requests, from input processing to output generation, excluding network or serving overhead.
 
-        # report performance metric
-        python3 get_bert_model_metrics.py $TRAIN_DIR
-    ```
-    Note that there is a python script for reporting performance that was also included in the model script directory. For single result reporting scripts, make sure that you print performance in the following format, `performance: PERFORMANCE_NUMBER PERFORMANCE_METRIC`. For example, the performance reporting script for bert, get_bert_model_metrics.py, prints `performance: 3.0637370347976685 examples/sec`.
+Key Metrics:  Total latency (in seconds) for processing the batch.
 
-    For scripts that report multiple results, signal MAD to expect multiple results with 'multiple\_results' field in models.json. This points to a csv generated by the script. The csv should have 3 columns, `models,performance,metric`, with different rows for different results. 
-
-4. For a particular model, multiple tags such as the precision, the framework, workload may be given.  For example, the "tf2_mlperf_resnet50v1.nchw" could have the "tf2" and "resnet50" tag.  If this workload also specified the precision then this would be a valid tag as well (e.g. "fp16" or "fp32").  Also, MAD considers each model name to be a default tag, that need not be explicitly specified.
+Use Case: Ideal for testing the impact of model configurations (e.g., batch size, sequence length) or hardware capabilities on inference speed.
 
 
-## Special environment variables 
+Example Command (assumes that the model is present in the $HOME/dockerx folder)
 
-MAD uses special environment variables to provide additional functionality within MAD. These environment variables always have a MAD_ prefix. These variables are accessible within the model scripts. 
-
-  | Variable                    | Description                          |
-  |-----------------------------|--------------------------------------|
-  | MAD_SYSTEM_GPU_ARCHITECTURE | GPU Architecture for the host system |
-  | MAD_RUNTIME_NGPUS           | Number of GPU available to the model |
-
-### Model environment variables
-
-MAD also exposes model-environment variables to allow for model tuning at runtime. These environment variables always have a MAD_MODEL_ prefix. These variables are accessible within the model scripts and are set to default values if not specified at runtime. 
-
-   | Field                       | Description                                                                       |
-   |-----------------------------| ----------------------------------------------------------------------------------|
-   | MAD_MODEL_NAME              | model's name in `models.json`                                                     |
-   | MAD_MODEL_NUM_EPOCHS        | number of epochs                                                                  |
-   | MAD_MODEL_BATCH_SIZE        | batch-size                                                                        |
+```
+python benchmark_latency.py --input-len=1024 --output-len=1024 --batch-size=1 --num-iters=5 --model='/dockerx/Llama-3.1-8B-Instruct/' --num-iters-warmup 2 --dtype=float16 --max_model_len=4096
+```
 
