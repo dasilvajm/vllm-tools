@@ -97,3 +97,4 @@ Example Command (assumes that the model is present in the $HOME/dockerx folder)
 python benchmark_latency.py --input-len=1024 --output-len=1024 --batch-size=1 --num-iters=5 --model='/dockerx/Llama-3.1-8B-Instruct/' --num-iters-warmup 2 --dtype=float16 --max_model_len=4096
 ```
 
+This test runs the Llama-3.1-8B-Instruct model with batch size 1, input length 1024 and output length 1024
