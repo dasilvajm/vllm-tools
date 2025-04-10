@@ -11,6 +11,7 @@ vLLM is a framework designed to streamline the deployment, testing, and benchmar
 - Ubuntu 22.04 LTS image
 
 
+
 ## Install ROCm
 The example below outlines the steps for installing the latest available public AMD ROCm release, in this case, ROCm 6.3.2.
 
@@ -40,6 +41,7 @@ Reboot the instance before continuing.  After the reboot, load the amdgpu driver
 sudo modprobe amdgpu
 ```
 
+
  
 ## Install Docker
 Use the steps below to install Docker:
@@ -61,6 +63,7 @@ sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin 
 ```
 
 
+
 ## Pull and run the recommended AMD V710 VLLM Docker image
 
 A V710 vLLM docker image has been made available on AMD’s rocm/vllm-dev dockerhub repository.  
@@ -72,6 +75,7 @@ sudo docker pull rocm/vllm-dev:v710inference_rocm6.3-release_ubuntu22.04_py3.10_
 ```
 
 
+
 Run the Docker image:
 
 ```
@@ -80,12 +84,14 @@ sudo docker run -it --network=host --device=/dev/kfd --device=/dev/dri --ipc=hos
 
 Note that this example mounts the $HOME/dockerx folder to the container.  In the benchmarking examples below, the language models are assumed to be already downloaded to the /dockerx folder.
 
+
  
 ## Benchmarking Inference Performance with vLLM
 
 vLLM includes three key benchmarking scripts to evaluate different aspects of inference performance: benchmark_latency.py, benchmark_throughput.py, and benchmark_serving.py.   This document will focus on the latency benchmark.
 
 The benchmark_latency.py script is designed to measure the latency of processing a single batch of requests in an offline inference scenario. This test evaluates the end-to-end latency for a single batch of requests, from input processing to output generation, excluding network or serving overhead and will provide the total latency (in seconds) for processing the batch.
+
 
 
 ## Example Command 
