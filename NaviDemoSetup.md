@@ -103,7 +103,9 @@ If ROCm is properly installed, confirm that ROCm identifies all of the Navi48 GP
 <br>
 In the example output below, four Navi48 GPUs are installed and identified:
 <br>
-![Screenshot](rocm-smi.jpg)
+<img src="https://github.com/dasilvajm/vllm-tools/blob/main/rocm-smi.jpg" alt="Screenshot" width="500"/>
+
+
 <br><br>
  
 ## Install Docker
