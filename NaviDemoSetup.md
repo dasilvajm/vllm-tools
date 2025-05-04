@@ -20,14 +20,14 @@ This should report back "SecureBoot disabled"
 ```
 sudo apt install openssh-server -y
 ```
-<br><br>
+<br>
 
 - Confirm the Ubuntu IP address
 
 ```
 ip add | grep inet
 ```
-<br><br>
+<br>
 
 - Connect to the system via your SSH client
 
