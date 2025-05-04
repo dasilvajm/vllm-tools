@@ -12,22 +12,22 @@ As a starting point, it is assumed that the user has an Ubuntu 24.04 installatio
 ```
 mokutil --sb-state
 ```
-This should report back "DecureBoot disabled"
-<br>
+This should report back "SecureBoot disabled"
+<br><br>
 
 - Ahead of accessing the platform via SSH, install OpenSSH-Server
 
 ```
 sudo apt install openssh-server -y
 ```
-<br>
+<br><br>
 
 - Confirm the Ubuntu IP address
 
 ```
 ip add | grep inet
 ```
-<br>
+<br><br>
 
 - Connect to the system via your SSH client
 
