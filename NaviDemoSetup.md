@@ -79,7 +79,7 @@ dkms status
 ```
 <br>
 This should report back similar to the following:
-
+<br>
 amdgpu/6.12.6-2107834.22.04, 6.11.0-24-generic, x86_64: installed
 <br>
 
