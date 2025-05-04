@@ -79,10 +79,13 @@ dkms status
 ```
 <br>
 This should report back similar to the following:
+
 amdgpu/6.12.6-2107834.22.04, 6.11.0-24-generic, x86_64: installed
 <br>
-Reboot the system before continuing.  After the reboot, load the amdgpu driver:
 
+Reboot the system before continuing.
+<br>
+After the reboot, load the amdgpu driver:
 ```
 sudo modprobe amdgpu
 ```
