@@ -94,6 +94,28 @@ After the reboot, load the amdgpu driver:
 ```
 sudo modprobe amdgpu
 ```
+<br>
+If ROCm is properly installed, confirm that ROCm identifies all of the Navi48 GPUs installed]
+
+```
+/opt/rocm-6.4.0/bin/rocm-smi
+```
+<br>
+In the example output below, four Navi48 GPUs are installed and identified:
+<br>
+======================================= ROCm System Management Interface =======================================
+================================================= Concise Info =================================================
+Device  Node  IDs              Temp    Power  Partitions          SCLK   MCLK   Fan  Perf  PwrCap  VRAM%  GPU%
+              (DID,     GUID)  (Edge)  (Avg)  (Mem, Compute, ID)
+================================================================================================================
+0       2     0x7551,   7727   32.0°C  1.0W   N/A, N/A, 0         0Mhz   96Mhz  0%   auto  300.0W  1%     0%
+1       3     0x7551,   50742  18.0°C  1.0W   N/A, N/A, 0         0Mhz   96Mhz  0%   auto  300.0W  1%     0%
+2       4     0x7551,   20095  32.0°C  1.0W   N/A, N/A, 0         0Mhz   96Mhz  0%   auto  300.0W  1%     0%
+3       1     0x7551,   23147  32.0°C  4.0W   N/A, N/A, 0         75Mhz  96Mhz  0%   auto  300.0W  1%     0%
+================================================================================================================
+============================================= End of ROCm SMI Log ==============================================
+
+
 
 <br><br>
  
