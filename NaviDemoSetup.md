@@ -7,42 +7,47 @@ As a starting point, it is assumed that the user has an Ubuntu 24.04 installatio
 ## Before you start
 - Ensure that you have sufficient disk storage in your platform to accommodate the docker images and LLMs. A minimum 1 TB of storage space is recommended
 
-- It is preferred that SecureBoot is disabled on the platform
+- It is preferred that SecureBoot is disabled on the platform. Check this as follows:
 
 ```
 mokutil --sb-state
 ```
 This should report back "DecureBoot disabled"
-
+<br>
 
 - Ahead of accessing the platform via SSH, install OpenSSH-Server
 
 ```
 sudo apt install openssh-server -y
 ```
+<br>
 
 - Confirm the Ubuntu IP address
 
 ```
 ip add | grep inet
 ```
+<br>
 
 - Connect to the system via your SSH client
 
 ```
 ssh username@<system-IP-address>
 ```
-<br>
+<br><br>
 
-Update Ubuntu to the latest and greatest
+##  Ubuntu Linux Setup 
+Update Ubuntu to the latest and greatest for the installed release
 ```
 sudo apt update && sudo apt upgrade -y
 ```
+<br>
 
 Install some prerequisites:
 ```
 sudo apt install python3-pip git curl git-lfs -y
 ```
+<br>
 
 Blacklist the amdgpu driver (Upstream amdgpu may interfere with the ROCm installation)
 ```
@@ -53,9 +58,9 @@ sudo update-initramfs -uk all
 Reboot the system
 
 After the system is back up, SSH into the system with your SSH client again.
+<br><br>
 
-Install ROCm
-
+## Install ROCm
 ```
 wget https://repo.radeon.com/amdgpu-install/6.4/ubuntu/jammy/amdgpu-install_6.4.60400-1_all.deb
 sudo apt install ./amdgpu-install_6.4.60400-1_all.deb -y
@@ -74,8 +79,7 @@ dkms status
 
 This should report back similar to the following:
 amdgpu/6.12.6-2107834.22.04, 6.11.0-24-generic, x86_64: installed
-
-
+<br>
 Reboot the system before continuing.  After the reboot, load the amdgpu driver:
 
 ```
@@ -126,19 +130,4 @@ Note that this example mounts the $HOME/dockerx folder to the container.  In the
 <br><br>
  
 ## Benchmarking Inference Performance with vLLM
-
-vLLM includes three key benchmarking scripts to evaluate different aspects of inference performance: benchmark_latency.py, benchmark_throughput.py, and benchmark_serving.py.   This document will focus on the latency benchmark.
-
-The benchmark_latency.py script is designed to measure the latency of processing a single batch of requests in an offline inference scenario. This test evaluates the end-to-end latency for a single batch of requests, from input processing to output generation, excluding network or serving overhead and will provide the total latency (in seconds) for processing the batch.
-
-<br>
-
-## Example Command 
-The command below runs the Llama-3.1-8B-Instruct model with batch size 1, input length 1024 and output length 1024 and expects that the model is present in the $HOME/dockerx folder:
-
-```
-python benchmark_latency.py --input-len=1024 --output-len=1024 --batch-size=1 --num-iters=5 --model='/dockerx/Llama-3.1-8B-Instruct/' --num-iters-warmup 2 --dtype=float16 --max_model_len=4096
-```
-
-
 
