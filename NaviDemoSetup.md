@@ -70,13 +70,14 @@ sudo apt install "linux-headers-$(uname -r)" "linux-modules-extra-$(uname -r)" &
 sudo usermod -a -G render,video $LOGNAME # Add the current user to the render and video groups
 sudo apt install amdgpu-dkms rocm -y
 ```
+<br>
 
 When done, verify that amdgpu dkms is properly installed.  
 
 ```
 dkms status
 ```
-
+<br>
 This should report back similar to the following:
 amdgpu/6.12.6-2107834.22.04, 6.11.0-24-generic, x86_64: installed
 <br>
