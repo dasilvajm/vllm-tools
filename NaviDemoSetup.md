@@ -79,23 +79,24 @@ dkms status
 ```
 <br>
 This should report back similar to the following:
-<br>
 
+```
 amdgpu/6.12.6-2107834.22.04, 6.11.0-24-generic, x86_64: installed
+```
 <br>
 
 
 Reboot the system before continuing.
 
 
-<br>
+<br><br>
 After the reboot, load the amdgpu driver (note, this step will be required each time that the system is restarted):
 
 ```
 sudo modprobe amdgpu
 ```
 <br>
-To confirm that you have a functional ROCm installation, confirm that ROCm identifies all of the installed Navi48 GPUs:
+To check that you have a functional ROCm installation, confirm that ROCm identifies all of the installed Navi48 GPUs:
 
 ```
 /opt/rocm-6.4.0/bin/rocm-smi
