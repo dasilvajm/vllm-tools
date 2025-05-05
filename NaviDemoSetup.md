@@ -166,14 +166,12 @@ Inside the container, launch the VLLM server:
 python -m vllm.entrypoints.openai.api_server --model='/models/DeepSeek-R1-Distill-Llama-70B-FP8-dynamic/' --dtype=bfloat16 --max_model_len=4096 --gpu-memory-utilization=0.98 -tp=4
 ```
 <br>
-In this example, the VLLM inference server was launched using the DeepSeek-R1-Distill-Llama-70B-FP8-dynamic model and will use the four GPUs.  It will take approximately 45 seconds for the model to be loaded onto the four GPUs and the VLLM server should start up without any errors.  The end of the process of starting the server and loading the model should show similar to the following:
+In this example, the VLLM inference server was launched using the DeepSeek-R1-Distill-Llama-70B-FP8-dynamic model and will use the four GPUs.  It will take approximately 45 seconds for the model to be loaded onto the four GPUs and the VLLM server should start up without any errors.  The end of the process of starting the server and loading the model should show similar to the following:<br>
 
 <br>
-INFO:     Started server process [722]
-
-INFO:     Waiting for application startup.
-
-INFO:     Application startup complete.
+INFO:     Started server process [722]<br>
+INFO:     Waiting for application startup.<br>
+INFO:     Application startup complete.<br>
 
 
 <br><br>
