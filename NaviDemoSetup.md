@@ -15,7 +15,7 @@ mokutil --sb-state
 This should report back "SecureBoot disabled"
 <br><br>
 
-- Ahead of accessing the platform via SSH, install OpenSSH-Server
+- In order to access the platform via SSH, install OpenSSH-Server
 
 ```
 sudo apt install openssh-server -y
@@ -57,7 +57,7 @@ sudo update-initramfs -uk all
 
 Reboot the system
 
-After the system is back up, SSH into the system with your SSH client again.
+After the system has booted up, SSH into the system with your SSH client again.
 <br><br>
 
 ## Install ROCm
@@ -89,13 +89,13 @@ Reboot the system before continuing.
 
 
 <br>
-After the reboot, load the amdgpu driver:
+After the reboot, load the amdgpu driver (note, this step will be required each time that the system is restarted):
 
 ```
 sudo modprobe amdgpu
 ```
 <br>
-If ROCm is properly installed, confirm that ROCm identifies all of the Navi48 GPUs installed:
+To confirm that you have a functional ROCm installation, confirm that ROCm identifies all of the installed Navi48 GPUs:
 
 ```
 /opt/rocm-6.4.0/bin/rocm-smi
