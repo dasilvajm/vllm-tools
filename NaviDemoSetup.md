@@ -95,7 +95,7 @@ After the reboot, load the amdgpu driver:
 sudo modprobe amdgpu
 ```
 <br>
-If ROCm is properly installed, confirm that ROCm identifies all of the Navi48 GPUs installed]
+If ROCm is properly installed, confirm that ROCm identifies all of the Navi48 GPUs installed:
 
 ```
 /opt/rocm-6.4.0/bin/rocm-smi
@@ -149,5 +149,16 @@ Note that this example mounts the $HOME/dockerx folder to the container.  In the
 
 <br><br>
  
-## Benchmarking Inference Performance with vLLM
+## Set up Open WebUI
+
+Pull the Open WebUI docker image:
+
+```
+sudo docker run -d -p 3000:8080 -e OPENAI_API_KEY=1234 -v open-webui:/app/backend/data --name open-webui ghcr.io/open-webui/open-webui:main
+```
+<br>
+The command above pulls the image and set the API key to '1234'. This key will be used to connect to the VLLM server from an HTML client below.
+
+
+
 
