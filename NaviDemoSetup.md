@@ -170,8 +170,11 @@ In this example, the VLLM inference server was launched using the DeepSeek-R1-Di
 
 <br>
 INFO:     Started server process [722]
+
 INFO:     Waiting for application startup.
+
 INFO:     Application startup complete.
+
 
 <br><br>
  
