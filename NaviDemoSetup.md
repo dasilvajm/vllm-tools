@@ -129,23 +129,44 @@ sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin 
 
 <br>
 
-## Pull and run the recommended Navi48 VLLM Docker image
+## Download the LLM
+Create a models directly on your HOME path of the Linux installation and cd into that directory:
+
+```
+mkdir models
+cd models
+```
+<br>
+
+Download the LLM from Huggingface.  In the example below, we are cloning the DeepSeek-R1-Distill-Llama-70B-FP8-dynamic model
+```
+git clone https://huggingface.co/RedHatAI/DeepSeek-R1-Distill-Llama-70B-FP8-dynamic
+```
+
+## Set Up and Run the VLLM Server
 
 Pull the image:
 
 ```
-sudo docker pull xxxxxxxxxxx
+sudo docker pull hyoon11/vllm-dev:20250417_fp8_navi_main_a1c35e7_dev
 ```
-
 <br>
 
 Run the Docker image:
 
 ```
-sudo docker run -it --network=host --device=/dev/kfd --device=/dev/dri --ipc=host --shm-size 16G --group-add video --cap-add=SYS_PTRACE --security-opt seccomp=unconfined -v $HOME/dockerx:/dockerx rocm/vllm-dev:v710inference_rocm6.3-release_ubuntu22.04_py3.10_pytorch_release-2.6
+sudo docker run -it --network=host --device=/dev/kfd --device=/dev/dri --ipc=host --shm-size 16G --group-add video --cap-add=SYS_PTRACE --security-opt seccomp=unconfined -v $HOME/models:/models hyoon11/vllm-dev:20250417_fp8_navi_main_a1c35e7_dev
 ```
 
-Note that this example mounts the $HOME/dockerx folder to the container.  In the benchmarking examples below, the language models are assumed to be already downloaded to the /dockerx folder.
+Note that this example mounts the $HOME/models folder to the container.  Inside the docker, when a path to the model folder is required, use /models/<model-folder-name>, for example, '/models/DeepSeek-R1-Distill-Llama-70B-FP8-dynamic'
+<br>
+
+Inside the container, launch the VLLM server:
+```
+python -m vllm.entrypoints.openai.api_server --model='/models/DeepSeek-R1-Distill-Llama-70B-FP8-dynamic/' --dtype=bloat16 --max_model_len=4096 --gpu-memory-utilization=0.98
+```
+<br>
+The VLLM server should start up without any errors
 
 <br><br>
  
@@ -157,7 +178,7 @@ Pull the Open WebUI docker image:
 sudo docker run -d -p 3000:8080 -e OPENAI_API_KEY=1234 -v open-webui:/app/backend/data --name open-webui ghcr.io/open-webui/open-webui:main
 ```
 <br>
-The command above pulls the image and set the API key to '1234'. This key will be used to connect to the VLLM server from an HTML client below.
+The command above pulls the image and sets the API key to '1234'. This key will be used to connect to the VLLM server from an HTML client below.
 
 
 
