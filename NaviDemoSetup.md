@@ -157,16 +157,20 @@ Run the Docker image:
 ```
 sudo docker run -it --network=host --device=/dev/kfd --device=/dev/dri --ipc=host --shm-size 16G --group-add video --cap-add=SYS_PTRACE --security-opt seccomp=unconfined -v $HOME/models:/models hyoon11/vllm-dev:20250417_fp8_navi_main_a1c35e7_dev
 ```
-
+<br>
 Note that this example mounts the $HOME/models folder to the container.  Inside the docker, when a path to the model folder is required, use /models/<model-folder-name>, for example, '/models/DeepSeek-R1-Distill-Llama-70B-FP8-dynamic'
 <br>
 
 Inside the container, launch the VLLM server:
 ```
-python -m vllm.entrypoints.openai.api_server --model='/models/DeepSeek-R1-Distill-Llama-70B-FP8-dynamic/' --dtype=bloat16 --max_model_len=4096 --gpu-memory-utilization=0.98
+python -m vllm.entrypoints.openai.api_server --model='/models/DeepSeek-R1-Distill-Llama-70B-FP8-dynamic/' --dtype=bfloat16 --max_model_len=4096 --gpu-memory-utilization=0.98 -tp=4
 ```
 <br>
-The VLLM server should start up without any errors
+In this example, the VLLM inference server was launched using the DeepSeek-R1-Distill-Llama-70B-FP8-dynamic model and will use the four GPUs.  It will take approximately 45 seconds for the model to be loaded onto the four GPUs and the VLLM server should start up without any errors.  The end of the process of starting the server and loading the model should show similar to the following:
+<br>
+INFO:     Started server process [722]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
 
 <br><br>
  
