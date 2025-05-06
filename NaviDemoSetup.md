@@ -13,6 +13,7 @@ As a starting point, it is assumed that the user has an Ubuntu 24.04 installatio
 mokutil --sb-state
 ```
 This should report back "SecureBoot disabled"
+
 <br><br>
 Update Ubuntu to the latest and greatest for the installed release
 ```
