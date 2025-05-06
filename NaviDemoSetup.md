@@ -14,22 +14,26 @@ mokutil --sb-state
 ```
 This should report back "SecureBoot disabled"
 <br><br>
-
-- In order to access the platform via SSH, install OpenSSH-Server
+Update Ubuntu to the latest and greatest for the installed release
+```
+sudo apt update && sudo apt upgrade -y
+```
+<br><br>
+In order to access the platform via SSH, install OpenSSH-Server
 
 ```
 sudo apt install openssh-server -y
 ```
 <br>
 
-- Confirm the Ubuntu IP address
+Confirm the Ubuntu IP address
 
 ```
 ip add | grep inet
 ```
 <br>
 
-- Connect to the system via your SSH client
+Connect to the system via your SSH client
 
 ```
 ssh username@<system-IP-address>
@@ -37,11 +41,6 @@ ssh username@<system-IP-address>
 <br><br>
 
 ##  Ubuntu Linux Setup 
-Update Ubuntu to the latest and greatest for the installed release
-```
-sudo apt update && sudo apt upgrade -y
-```
-<br>
 
 Install some prerequisites:
 ```
@@ -167,7 +166,7 @@ Inside the container, launch the VLLM server:
 python -m vllm.entrypoints.openai.api_server --model='/models/DeepSeek-R1-Distill-Llama-70B-FP8-dynamic/' --max_model_len=4096 -tp=4 --distributed_executor_backend="mp"
 ```
 <br>
-In this example, the VLLM inference server was launched using the DeepSeek-R1-Distill-Llama-70B-FP8-dynamic model and will use the four GPUs.  It will take approximately 45 seconds for the model to be loaded onto the four GPUs and the VLLM server should start up without any errors.  The end of the process of starting the server and loading the model should show similar to the following:<br>
+In this example, the VLLM inference server was launched using the DeepSeek-R1-Distill-Llama-70B-FP8-dynamic model and will use all four GPUs.  The VLLM server should start up without any errors with the end of the process showing similar to the following:<br>
 
 ```
 INFO:     Started server process [722]<br>
@@ -178,7 +177,7 @@ INFO:     Application startup complete.<br>
  
 ## Set up Open WebUI
 
-Pull the Open WebUI docker image:
+In a new SSH session, pull the Open WebUI docker image:
 
 ```
 sudo docker run -d -p 3000:8080 -e OPENAI_API_KEY=1234 -v open-webui:/app/backend/data --name open-webui ghcr.io/open-webui/open-webui:main
