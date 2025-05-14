@@ -64,7 +64,21 @@ Reboot the system
 After the system has booted up, SSH into the system with your SSH client again.
 <br><br>
 
-## Install ROCm (Ubuntu 24.04)
+## Install ROCm
+****
+Ubuntu 24.04
+```
+wget https://repo.radeon.com/amdgpu-install/6.4/ubuntu/noble/amdgpu-install_6.4.60400-1_all.deb
+sudo apt install ./amdgpu-install_6.4.60400-1_all.deb -y
+sudo apt update &&
+sudo apt install python3-setuptools python3-wheel -y &&
+sudo apt install "linux-headers-$(uname -r)" "linux-modules-extra-$(uname -r)" &&
+sudo usermod -a -G render,video $LOGNAME # Add the current user to the render and video groups
+sudo apt install amdgpu-dkms rocm -y
+```
+<br>
+
+Ubuntu 22.04
 ```
 wget https://repo.radeon.com/amdgpu-install/6.4/ubuntu/jammy/amdgpu-install_6.4.60400-1_all.deb
 sudo apt install ./amdgpu-install_6.4.60400-1_all.deb -y
@@ -75,6 +89,8 @@ sudo usermod -a -G render,video $LOGNAME # Add the current user to the render an
 sudo apt install amdgpu-dkms rocm -y
 ```
 <br>
+
+
 
 When done, verify that amdgpu dkms is properly installed.  
 
@@ -228,7 +244,7 @@ You are now ready to use your local chatbot!
 
 
 
-## Install ROCm (Ubuntu 22.04)
+## Install ROCm 6.4.1 (Ubuntu 22.04)
 ```
 wget -N -P /tmp/ https://repo.radeon.com/amdgpu-install/.6.4.1/ubuntu/jammy/amdgpu-install_6.4.60401-1_all.deb
 sudo apt-get install /tmp/amdgpu-install_6.4.60401-1_all.deb -y
