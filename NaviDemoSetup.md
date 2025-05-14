@@ -188,7 +188,7 @@ In a new SSH session, pull the Open WebUI docker image:
 sudo docker run -d -p 3000:8080 -e OPENAI_API_KEY=1234 -v open-webui:/app/backend/data --name open-webui ghcr.io/open-webui/open-webui:main
 ```
 <br>
-The command above pulls the image and sets the API key to '1234'. This key will be used to connect to the VLLM server from an HTML client below.
+The command above pulls the image and sets the API key to '1234'. This key will be used to connect to the VLLM server from an HTML client as shown below.
 <br><br>
 
 Open a web browser of your choice and enter the following URL: 
