@@ -196,7 +196,7 @@ http://your-ip-address:3000
 From the resulting web page, click "Get Started" at the bottom center of the webpage and then create an admin account by providing your name, email address and password.  
 
 <br>
-<img src="https://github.com/dasilvajm/vllm-tools/blob/main/openwebui-2.jpg" alt="Screenshot" width="800"/>
+<img src="https://github.com/dasilvajm/vllm-tools/blob/main/openwebui-2.jpg" alt="Screenshot" width="500"/>
 <br>
 
 Note that there is no email verification required and, as such, any email address can be used.  You will, however, be required to log in to the Open WebUI chatbot using your email address and password.  Click "Create Admin Account" when done.
@@ -211,6 +211,13 @@ From the resulting window, click "Settings" and then "Connections".  Click the +
 <br><br>
 <img src="https://github.com/dasilvajm/vllm-tools/blob/main/openwebui-4-1.jpg" alt="Screenshot" width="800"/>
 <br><br>
+
+Lastly, add the URL of your server (this time using port 8000 and /v1 as in the example below.  For Key, using the API key we used when launching the Open WebUI docker above, in this example, 1234.  Click SAVE.
+
+<br><br>
+<img src="https://github.com/dasilvajm/vllm-tools/blob/main/openwebui-5.jpg" alt="Screenshot" width="800"/>
+<br><br>
+
 
 
 
