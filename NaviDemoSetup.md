@@ -211,7 +211,7 @@ Next, click the user icon at the top right of the web page and then click "Admin
 <img src="https://github.com/dasilvajm/vllm-tools/blob/main/openwebui-3.jpg" alt="Screenshot" width="300"/>
 <br><br>
 
-Next, we need to add the conenction to our local VLLM server by clicking "Settings", then "Connections" and finally the + sign to the right of "Manage OpenAI API Connections".
+Add the connection to our local VLLM server by clicking "Settings", then "Connections" and finally the + sign to the right of "Manage OpenAI API Connections".
 <br><br>
 <img src="https://github.com/dasilvajm/vllm-tools/blob/main/openwebui-4-1.jpg" alt="Screenshot" width="800"/>
 <br><br>
