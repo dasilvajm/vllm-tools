@@ -189,8 +189,8 @@ The command above pulls the image and sets the API key to '1234'. This key will 
 
 Open a web browser of your choice and enter the following URL: 
 <br>
-http://<your-ip-address>:3000
-<br>
+http://your-ip-address:3000
+<br><br>
 (Note that the IP address used here is the same IP address of your machine that you launched the VLLM server from).
 <br><br>
 From the resulting web page, click "Get Started" at the bottom center of the webpage and then create an admin account by providing your name, email address and password.  
