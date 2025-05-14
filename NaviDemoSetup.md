@@ -35,7 +35,7 @@ ip add | grep inet
 <br>
 
 Note that you will use this same IP address to connect to and set up your Open WebUI chatbot interface as detailed further below.
-<br>
+<br><br>
 
 
 Connect to the system via your SSH client
