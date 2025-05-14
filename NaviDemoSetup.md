@@ -64,7 +64,7 @@ Reboot the system
 After the system has booted up, SSH into the system with your SSH client again.
 <br><br>
 
-## Install ROCm
+## Install ROCm (Ubuntu 24.04)
 ```
 wget https://repo.radeon.com/amdgpu-install/6.4/ubuntu/jammy/amdgpu-install_6.4.60400-1_all.deb
 sudo apt install ./amdgpu-install_6.4.60400-1_all.deb -y
@@ -225,6 +225,19 @@ Click SAVE.
 <br><br>
 
 You are now ready to use your local chatbot!
+
+
+
+## Install ROCm (Ubuntu 22.04)
+```
+wget -N -P /tmp/ https://repo.radeon.com/amdgpu-install/.6.4.1/ubuntu/jammy/amdgpu-install_6.4.60401-1_all.deb
+sudo apt-get install /tmp/amdgpu-install_6.4.60401-1_all.deb -y
+sudo sed -i "s/\/6.4.1/\/.6.4.1/" /etc/apt/sources.list.d/amdgpu*.list
+sudo sed -i "s/\/6.4.1/\/.apt_6.4.1/" /etc/apt/sources.list.d/rocm.list
+sudo apt-get update
+sudo amdgpu-install --usecase=rocm,graphics
+```
+<br>
 
 
 
