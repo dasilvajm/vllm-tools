@@ -209,7 +209,7 @@ Next, click the user icon at the top right of the web page and then click "Admin
 
 From the resulting window, click "Settings" and then "Connections".  Click the + sign to the right of "Manage OpenAI API Connections":
 <br>
-<img src="https://github.com/dasilvajm/vllm-tools/blob/main/openwebui-4.jpg" alt="Screenshot" width="800"/>
+<img src="https://github.com/dasilvajm/vllm-tools/blob/main/openwebui-4-1.jpg" alt="Screenshot" width="800"/>
 <br><br>
 
 
