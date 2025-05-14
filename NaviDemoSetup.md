@@ -170,9 +170,9 @@ python -m vllm.entrypoints.openai.api_server --model='/models/DeepSeek-R1-Distil
 In this example, the VLLM inference server was launched using the DeepSeek-R1-Distill-Llama-70B-FP8-dynamic model and will use all four GPUs.  The VLLM server should start up without any errors with the end of the process showing similar to the following:<br>
 
 ```
-INFO:     Started server process [722]<br>
-INFO:     Waiting for application startup.<br>
-INFO:     Application startup complete.<br>
+INFO:     Started server process [722]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
 ```
 <br><br>
  
