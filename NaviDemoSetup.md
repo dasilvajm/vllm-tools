@@ -219,7 +219,7 @@ Nest, we need to add the conenction to our local VLLM server by clicking "Settin
 Lastly, add the URL of your server (this time using port 8000 and append /v1 as in the example below.  For the Key value, use the API key we used when launching the Open WebUI docker above, in this example, 1234.  Click SAVE.
 
 <br><br>
-<img src="https://github.com/dasilvajm/vllm-tools/blob/main/openwebui-5.jpg" alt="Screenshot" width="600"/>
+<img src="https://github.com/dasilvajm/vllm-tools/blob/main/openwebui-5.jpg" alt="Screenshot" width="500"/>
 <br><br>
 
 You are now ready to use your local chatbot!
