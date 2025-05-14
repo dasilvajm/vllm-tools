@@ -200,5 +200,26 @@ From the resulting web page, click "Get Started" at the bottom center of the web
 <br>
 
 Note that there is no email verification required and, as such, any email address can be used.  You will, however, be required to log in to the Open WebUI chatbot using your email address and password.  Click "Create Admin Account" when done.
+<br><br>
+
+Next, click the user icon at the top right of the web page and then click "Admin Panel"
+<br>
+<img src="https://github.com/dasilvajm/vllm-tools/blob/main/openwebui-3.jpg" alt="Screenshot" width="800"/>
+<br><br>
+
+From the resulting window, click "Settings" and then "Connections".  Click the + sign to the right of "Manage OpenAI API Connections":
+<br>
+<img src="https://github.com/dasilvajm/vllm-tools/blob/main/openwebui-4.jpg" alt="Screenshot" width="800"/>
+<br><br>
+
+
+
+
+
+
+
+
+
+
 
 
