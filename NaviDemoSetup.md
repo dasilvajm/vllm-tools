@@ -209,16 +209,16 @@ Next, click the user icon at the top right of the web page and then click "Admin
 
 From the resulting window, click "Settings" and then "Connections".  Click the + sign to the right of "Manage OpenAI API Connections".
 <br><br>
-<img src="https://github.com/dasilvajm/vllm-tools/blob/main/openwebui-4-1.jpg" alt="Screenshot" width="800"/>
+<img src="https://github.com/dasilvajm/vllm-tools/blob/main/openwebui-4-1.jpg" alt="Screenshot" width="600"/>
 <br><br>
 
-Lastly, add the URL of your server (this time using port 8000 and /v1 as in the example below.  For Key, using the API key we used when launching the Open WebUI docker above, in this example, 1234.  Click SAVE.
+Lastly, add the URL of your server (this time using port 8000 and append /v1 as in the example below.  For the Key value, use the API key we used when launching the Open WebUI docker above, in this example, 1234.  Click SAVE.
 
 <br><br>
 <img src="https://github.com/dasilvajm/vllm-tools/blob/main/openwebui-5.jpg" alt="Screenshot" width="800"/>
 <br><br>
 
-
+You are now ready to use your local chatbot!
 
 
 
