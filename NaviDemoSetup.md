@@ -244,14 +244,12 @@ You are now ready to use your local chatbot!
 
 
 
-## Install ROCm 6.4.1 (Ubuntu 22.04)
+## Remove AMDGPU Driver Blacklist
+<br>
 ```
-wget -N -P /tmp/ https://repo.radeon.com/amdgpu-install/.6.4.1/ubuntu/jammy/amdgpu-install_6.4.60401-1_all.deb
-sudo apt-get install /tmp/amdgpu-install_6.4.60401-1_all.deb -y
-sudo sed -i "s/\/6.4.1/\/.6.4.1/" /etc/apt/sources.list.d/amdgpu*.list
-sudo sed -i "s/\/6.4.1/\/.apt_6.4.1/" /etc/apt/sources.list.d/rocm.list
-sudo apt-get update
-sudo amdgpu-install --usecase=rocm,graphics
+sudo sed -i 's/^blacklist amdgpu/#blacklist amdgpu/' /etc/modprobe.d/blacklist.conf
+sudo update-initramfs -uk all
+sudo reboot
 ```
 <br>
 
