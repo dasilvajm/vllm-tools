@@ -246,10 +246,12 @@ You are now ready to use your local chatbot!
 
 ## Remove AMDGPU Driver Blacklist
 <br>
+
 ```
 sudo sed -i 's/^blacklist amdgpu/#blacklist amdgpu/' /etc/modprobe.d/blacklist.conf
 sudo update-initramfs -uk all
 sudo reboot
+
 ```
 <br>
 
